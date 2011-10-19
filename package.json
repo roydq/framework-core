@@ -1,0 +1,16 @@
+{
+  "author": "Robert Austin <robert@oatlab.com> (https://github.com/oatkiller)",
+  "name": "system",
+  "description": "A collecion of necessary libraries for developing with node.js.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/roybotnik/system",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roybotnik/system.git"
+  },
+  "main": "system.js",
+  "scripts": {
+    "test": "node test/_run.js"
+  },
+  "engine": "node >= v0.5.9"
+}

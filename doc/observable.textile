@@ -1,0 +1,194 @@
+h1. Methods:
+
+h2. .on
+
+*Register to an event*
+
+@.on(eventName,handler,scope);@
+
+*eventName* - {String} - name of the event
+*handler* - {Function}, will be called in passed scope with any additional arguments passed to fireEvent
+*scope* - {Object} to call handler with
+
+@.on(config);@
+
+Second Signature has a single arguments, config:
+
+*config* - {Object} - Contains multiple handlers.
+
+Like:
+
+<pre><code>
+observble.on({
+	eventName : function () {
+	},
+	scope : scope
+});
+</code></pre>
+
+or:
+
+<pre><code>
+observable.on({
+	eventName : function () {
+	},
+	secondEventName : {
+		fn : function () {
+		},
+		scope : otherScope
+	},
+	scope : defaultScope
+});
+</code></pre>
+
+h2. .un
+
+*Unregister a handler*
+
+@.un(eventName,handler,scope);@
+
+Use the same signature as .on.
+
+h2. .fireEvent
+
+*Fire an event*
+
+@.fireEvent(eventName,...);@
+
+*eventName* - {String} - name of the event to fire
+*anything* - Any number of arguments of any type to be passed to registered handlers
+
+h1. Examples
+
+<pre><code>
+// Subclass or instantiate Observable
+var Door = Observable.subclass({
+	open : function () {
+		this.fireEvent('open');
+	},
+	close : function () {
+		this.fireEvent('close');
+	}
+});
+
+var door = new Door();
+
+// use 'on' to register to these events
+door.on('open',function () {
+	console.log('Close the door! Its cold!');
+});
+
+door.on('close',function () {
+	console.log('Open the door, its hot in here!');
+});
+
+// If you override the constructor, call the super constructor
+var Cat = Observable.subclass({
+	constructor : function (color) {
+		this.color = color;
+		// call the Observable constructor
+		this.uber(arguments);
+	},
+	sleep : function (howLong) {
+		// pass any number of extra arguments to fireEvent
+		this.fireEvent('sleep',howLong);
+	},
+	eat : function (food) {
+		// pass any number of extra arguments to fireEvent
+		this.fireEvent('eat',food);
+	}
+});
+
+var cat = new Cat();
+
+var house = {
+	address : '1234 Gumdrop Lane',
+	cat : cat
+};
+
+// extra arguments are passed to handlers
+cat.on('sleep',function (howLong) {
+	console.debug('Cat is sleeping for ' + howLong + ' hours at ' + this.address);
+	// the third argument to 'on' is scope
+	// 'this' will be house inside of the handler
+},house);
+
+
+// store the handler and scope in order to remove a listener
+var handler = function () {
+	console.debug('Sleeping now');
+},
+	scope = house;
+
+// add a listener
+cat.on('sleep',handler,scope);
+
+// call 'un' to remove it
+cat.un('sleep',handler,scope);
+
+// Add multiple event handlers at once
+var car = new Observable(),
+	emergencyBreak = {
+		turnOn : function () {}
+	},
+	gas = 1;
+
+car.on({
+	stop : {
+		fn : function () {
+			this.turnOn();
+		},
+		// override scope like this
+		scope : emergencyBreak
+	},
+	start : function () {
+		gas--;
+	},
+	// scope at the top level is default
+	scope : car
+});
+
+// Add listeners in the prototype of a subclass
+var Seasons = Observable.subclass({
+	listeners : {
+		spring : {
+			fn : function () {
+				this.bloom();
+			},
+			scope : flowers
+		},
+		winter : snow.fall,
+		scope : snow
+	}
+});
+
+// Cancel an event by passing false
+var Door = Observable.subclass({
+	closed : true,
+	open : function () {
+		if (this.fireEvent('open')) {
+			// this wont happen, the event returns false after canceling
+			this.closed = false;
+		}
+	}
+});
+var LockingDoor = Door.subclass({
+	locked : true,
+	listeners : {
+		open : function () {
+			// dont open, its locked
+			return !this.locked;
+		}
+	}
+});
+
+var lockingDoor = new LockingDoor();
+
+lockingDoor.on('open',function () {
+	// this wont happen, the event is cancelled
+	console.debug('Welcome!');
+});
+
+lockingDoor.open();
+Assert(lockingDoor.closed === true,'Door opened');
+</code></pre>
