@@ -10,7 +10,7 @@
   },
   "main": "system.js",
   "scripts": {
-    "test": "node test/_run.js"
+    "test": "node test/_runner.js"
   },
-  "engine": "node >= v0.5.9"
+  "engine": "node >= v0.4.12"
 }
