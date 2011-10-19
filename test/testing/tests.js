@@ -1,11 +1,11 @@
 var System = require('../../system.js');
 
-var Runner = Testing.Runner;
-var Test = Testing.Test;
-var Assert = Testing.Assert;
-var Suite = Testing.Suite;
-var Resume = Testing.Resume;
-var Wait = Testing.Wait;
+var Runner = System.Testing.Runner;
+var Test = System.Testing.Test;
+var Assert = System.Testing.Assert;
+var Suite = System.Testing.Suite;
+var Resume = System.Testing.Resume;
+var Wait = System.Testing.Wait;
 
 var basicTest = function () {
 	var runner = new Runner();
@@ -22,27 +22,6 @@ var basicTest = function () {
 	suite.run();
 };
 basicTest();
-
-if (typeof module === 'undefined') {
-	var testExport = function () {
-		var testing = {};
-		this['git://github.com/oatkiller/testingjs.git'](testing);
-
-		var runner = new testing.Runner();
-		var suite = new testing.Suite({
-			runner : runner,
-			'1+1 should not equal 3' : function () {
-				testing.Assert(1+1!==3,'they did equal 3');
-			},
-			// this should fail
-			'1+1 should equal 3' : function () {
-				testing.Assert(1+1===3,'they didnt equal 3');
-			}
-		});
-		suite.run();
-	};
-	testExport();
-}
 
 var testSetupAndTearDown = function () {
 	// In this example, I'll test the methods of a class
