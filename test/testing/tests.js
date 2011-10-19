@@ -1,11 +1,11 @@
-var System = require('../../system.js');
+var Core = require('../../system.js');
 
-var Runner = System.Testing.Runner;
-var Test = System.Testing.Test;
-var Assert = System.Testing.Assert;
-var Suite = System.Testing.Suite;
-var Resume = System.Testing.Resume;
-var Wait = System.Testing.Wait;
+var Runner = Core.Testing.Runner;
+var Test = Core.Testing.Test;
+var Assert = Core.Testing.Assert;
+var Suite = Core.Testing.Suite;
+var Resume = Core.Testing.Resume;
+var Wait = Core.Testing.Wait;
 
 var basicTest = function () {
 	var runner = new Runner();

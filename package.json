@@ -1,12 +1,12 @@
 {
   "author": "Robert Austin <robert@oatlab.com> (https://github.com/oatkiller)",
-  "name": "system",
+  "name": "framework-core",
   "description": "A collecion of necessary libraries for developing with node.js.",
   "version": "0.0.1",
-  "homepage": "https://github.com/roybotnik/system",
+  "homepage": "https://github.com/roybotnik/framework-core",
   "repository": {
     "type": "git",
-    "url": "git://github.com/roybotnik/system.git"
+    "url": "git://github.com/roybotnik/framework-core.git"
   },
   "main": "system.js",
   "scripts": {
