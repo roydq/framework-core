@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git://github.com/roybotnik/framework-core.git"
   },
-  "main": "system.js",
+  "main": "core.js",
   "scripts": {
     "test": "node test/_runner.js"
   },
